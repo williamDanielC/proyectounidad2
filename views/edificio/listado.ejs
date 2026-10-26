@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edificios - Listado</title>
+</head>
+<body>
+  <h1>LISTADO DE EDIFICIOS</h1>
+  <p><a href="/edificios/create">AGREGAR EDIFICIO</a> | <a href="/listar">VER AULAS</a> | <a href="/mesas">VER MESAS</a> | <a href="/">INICIO</a></p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre del Edificio</th>
+        <th>Total Aulas</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (edificios && edificios.length > 0) { %>
+        <% edificios.forEach(function(edificio) { %>
+          <% const totalAulas = aulas.filter(a => a.edificio_id === edificio.id).length; %>
+          <tr>
+            <td><%= edificio.id %></td>
+            <td><strong><%= edificio.nombre %></strong></td>
+            <td><%= totalAulas %> aula(s) (<a href="/edificios/<%= edificio.id %>">Ver aulas</a>)</td>
+            <td>
+              <a href="/edificios/<%= edificio.id %>/edit">EDITAR</a> - 
+              <form action="/edificios/<%= edificio.id %>" method="post" style="display:inline">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="BORRAR" onclick="return confirm('¿Seguro de borrar este edificio? Las aulas asociadas quedarán sin edificio.');">
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="4">No hay edificios registrados.</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <br>
+  <hr>
+  <p><strong>Endpoints API REST para Postman:</strong></p>
+  <ul>
+    <li><code>GET /api/edificios</code> - Listar todos</li>
+    <li><code>POST /api/edificios</code> - Crear (<code>{ "nombre": "Edificio C" }</code>)</li>
+    <li><code>GET /api/edificios/1</code> - Consultar detalle</li>
+    <li><code>PUT /api/edificios/1</code> - Actualizar (<code>{ "nombre": "Edificio C Modificado" }</code>)</li>
+    <li><code>DELETE /api/edificios/1</code> - Eliminar</li>
+  </ul>
+</body>
+</html>

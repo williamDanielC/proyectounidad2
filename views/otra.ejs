@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto de Agenda y Horario</title>
+</head>
+<body>
+  <h1>Proyecto de Agenda y Horario</h1>
+  <p>Aquí se podrá ver qué aulas y edificios están disponibles, así como poder apartar cuando se use...</p>
+
+  <h3>Módulos de Gestión:</h3>
+  <ul>
+    <li><a href="/edificios"><strong>ADMINISTRACIÓN DE EDIFICIOS (NUEVO)</strong></a></li>
+    <li><a href="/listar"><strong>ADMINISTRACIÓN DE AULAS</strong></a> (Relacionadas con Edificios)</li>
+    <li><a href="/mesas">ADMINISTRACIÓN DE MESAS</a></li>
+  </ul>
+
+  <h3>Acciones Rápidas de Aulas:</h3>
+  <ul>
+    <li><a href="/preagregar">CREATE (Agregar Aula)</a></li>
+    <li><a href="/listar">READ - TODOS (Listado de Aulas con Edificio)</a></li>
+    <li><a href="/unoporuno/1">READ - UNO (Ver Aula 1)</a></li>
+    <li><a href="/seleccionar/1">UPDATE (Modificar Aula 1)</a></li>
+    <li>
+      <form action="/borrar/5" method="post" style="display:inline">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="DELETE (Borrar Aula 5)">
+      </form>
+    </li>
+  </ul>
+
+  <hr>
+  <h3>Guía de Pruebas de API REST (Postman):</h3>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Operación</th>
+        <th>Método</th>
+        <th>URL</th>
+        <th>Cuerpo (JSON)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Listar Edificios</td>
+        <td><code>GET</code></td>
+        <td><code>/api/edificios</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Crear Edificio</td>
+        <td><code>POST</code></td>
+        <td><code>/api/edificios</code></td>
+        <td><code>{ "nombre": "Edificio C" }</code></td>
+      </tr>
+      <tr>
+        <td>Obtener un Edificio</td>
+        <td><code>GET</code></td>
+        <td><code>/api/edificios/1</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Aulas de un Edificio</td>
+        <td><code>GET</code></td>
+        <td><code>/api/edificios/1/aulas</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Actualizar Edificio</td>
+        <td><code>PUT</code></td>
+        <td><code>/api/edificios/1</code></td>
+        <td><code>{ "nombre": "Edificio C Modificado" }</code></td>
+      </tr>
+      <tr>
+        <td>Eliminar Edificio</td>
+        <td><code>DELETE</code></td>
+        <td><code>/api/edificios/1</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Listar Todas las Aulas</td>
+        <td><code>GET</code></td>
+        <td><code>/api/aulas</code></td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

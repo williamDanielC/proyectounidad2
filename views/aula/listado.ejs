@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aulas - Listado</title>
+</head>
+<body>
+  <h1>MOSTRAR TODAS LAS AULAS</h1>
+  <p><a href="/preagregar">AGREGAR AULA</a> | <a href="/edificios">GESTIÓN DE EDIFICIOS</a> | <a href="/mesas">GESTIÓN DE MESAS</a> | <a href="/">INICIO</a></p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>capacidad</th>
+        <th>wifi</th>
+        <th>edificio</th>
+        <th>acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (aulas && aulas.length > 0) { %>
+        <% aulas.forEach(function(aula) { %>
+          <% const edif = edificios ? edificios.find(e => e.id === aula.edificio_id) : null; %>
+          <tr>
+            <td><%= aula.id %></td>
+            <td><strong><%= aula.nombre %></strong></td>
+            <td><%= aula.capacidad %></td>
+            <td><%= aula.wifi ? 'SÍ' : 'NO' %></td>
+            <td>
+              <% if (edif) { %>
+                <a href="/edificios/<%= edif.id %>"><%= edif.nombre %></a>
+              <% } else { %>
+                <span style="color: #666;">Sin edificio</span>
+              <% } %>
+            </td>
+            <td> 
+              <a href="/seleccionar/<%= aula.id %>">ACTUALIZAR</a>
+              - 
+              <form action="/borrar/<%= aula.id %>" method="post" style="display:inline">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="BORRAR">
+              </form>
+            </td>
+          </tr> 
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="6">VACIO</td>
+        </tr> 
+      <% } %>
+    </tbody>
+  </table>
+
+  <hr>
+  <p><a href="/preagregar">AGREGAR AULA</a> | <a href="/edificios">VER EDIFICIOS</a> | <a href="/">INICIO</a></p>
+</body>
+</html>

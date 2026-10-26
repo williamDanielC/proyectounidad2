@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edificio <%= edificio.nombre %> - Detalle</title>
+</head>
+<body>
+  <h1>EDIFICIO: <%= edificio.nombre %> (ID: <%= edificio.id %>)</h1>
+  <p><a href="/edificios">VOLVER A EDIFICIOS</a> | <a href="/preagregar?edificio_id=<%= edificio.id %>">AGREGAR AULA A ESTE EDIFICIO</a> | <a href="/listar">TODAS LAS AULAS</a></p>
+
+  <h3>Aulas Pertenecientes a este Edificio:</h3>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID Aula</th>
+        <th>Nombre del Aula</th>
+        <th>Capacidad</th>
+        <th>Wifi</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (aulas && aulas.length > 0) { %>
+        <% aulas.forEach(function(aula) { %>
+          <tr>
+            <td><%= aula.id %></td>
+            <td><strong><%= aula.nombre %></strong></td>
+            <td><%= aula.capacidad %></td>
+            <td><%= aula.wifi ? 'SÍ' : 'NO' %></td>
+            <td>
+              <a href="/seleccionar/<%= aula.id %>">EDITAR</a> - 
+              <form action="/borrar/<%= aula.id %>" method="post" style="display:inline">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="BORRAR">
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">Este edificio no tiene aulas asignadas actualmente.</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <br>
+  <p><strong>Endpoint JSON:</strong> <code>GET /api/edificios/<%= edificio.id %>/aulas</code></p>
+</body>
+</html>

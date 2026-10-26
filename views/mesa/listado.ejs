@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesas - Listado</title>
+</head>
+<body>
+<table border="1">
+ <thead>
+  <th>Numero de Inventario</th>
+  <th>Opciones</th>
+ </thead>
+ <tbody>
+<% if (mesas && mesas.length > 0) { %>
+  <% mesas.forEach(function(mesa) { %>
+  <tr>
+   <td>
+     <a href="/mesas/<%= mesa.id %>"><%= mesa.inventario %></a></td>
+   <td><a href="/mesas/<%= mesa.id %>/edit">EDITAR</a>  -  
+   <form action="/mesas/<%= mesa.id %>" method="post" style="display:inline" >
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="BORRAR">
+   </form> </td>
+  </tr> 
+  <% }); %>
+<% } else { %>
+  <tr>
+    <td colspan="2">VACIO</td>
+  </tr>
+<% } %>
+ </tbody>
+</table>
+<br>
+<a href="/mesas/create">AGREGAR</a> | <a href="/">INICIO</a>
+
+</body>
+</html>

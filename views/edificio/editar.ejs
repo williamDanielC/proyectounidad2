@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Edificio</title>
+</head>
+<body>
+  <h1>MODIFICAR EDIFICIO</h1>
+  <form action="/edificios/<%= edificio.id %>" method="post">
+    <input type="hidden" name="_method" value="put">
+    <label for="nombre">Nombre del Edificio:</label><br>
+    <input type="text" name="nombre" id="nombre" value="<%= edificio.nombre %>" required style="padding: 4px; width: 250px;"><br><br>
+    <input type="submit" value="ACTUALIZAR EDIFICIO">
+  </form>
+  <br>
+  <a href="/edificios">VOLVER AL LISTADO DE EDIFICIOS</a>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agregar Aula</title>
+</head>
+<body>
+  <h1>FORMULARIO PARA AGREGAR AULA</h1>
+  <form action="/agregar/" method="post">
+    <label for='nombre'>Nombre del aula:</label><br>
+    <input type='text' name='nombre' id='nombre' placeholder="Ej: C1" required><br><br>
+
+    <label for='capacidad'>Capacidad:</label><br>
+    <input type='number' name='capacidad' id='capacidad' placeholder="Ej: 30" required><br><br>
+
+    <label for='edificio_id'>Edificio:</label><br>
+    <select name='edificio_id' id='edificio_id' style="padding: 4px;">
+      <option value="">-- Ninguno / Sin asignar --</option>
+      <% if (edificios && edificios.length > 0) { %>
+        <% edificios.forEach(function(edif) { %>
+          <option value="<%= edif.id %>" <%= (typeof selectedEdificioId !== 'undefined' && selectedEdificioId == edif.id) ? 'selected' : '' %>>
+            <%= edif.nombre %> (ID: <%= edif.id %>)
+          </option>
+        <% }); %>
+      <% } %>
+    </select><br><br>
+
+    <label for='wifi'>
+      <input type='checkbox' name='wifi' id='wifi'> ¿Tiene Wifi?
+    </label><br><br>
+
+    <input type="submit" value="ENVIAR">
+  </form>
+  <br>
+  <a href="/listar">VOLVER AL LISTADO DE AULAS</a> | <a href="/edificios">VER EDIFICIOS</a>
+</body>
+</html>

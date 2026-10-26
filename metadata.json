@@ -1,0 +1,8 @@
+{
+  "name": "ProyectoUnidad2",
+  "description": "Sistema de gestión de aulas, mesas y sillas",
+  "version": "1.0.0",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
