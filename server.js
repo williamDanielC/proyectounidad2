@@ -429,6 +429,82 @@ app.get('/api/aulas/:id', (req, res) => {
   });
 });
 
+// Validar datos de un aula (usado por POST y PUT)
+const validarAula = (body, parcial = false) => {
+  const errores = {};
+  const { nombre, capacidad, edificio_id } = body;
+
+  if (!parcial || nombre !== undefined) {
+    if (!nombre || !String(nombre).trim()) {
+      errores.nombre = 'El campo nombre es obligatorio';
+    }
+  }
+  if (!parcial || capacidad !== undefined) {
+    const cap = Number(capacidad);
+    if (!Number.isInteger(cap) || cap <= 0) {
+      errores.capacidad = 'La capacidad debe ser un número entero mayor a 0';
+    }
+  }
+  if (edificio_id !== undefined && edificio_id !== null && edificio_id !== '') {
+    const edifId = parseInt(edificio_id, 10);
+    if (!edificios.some((e) => e.id === edifId)) {
+      errores.edificio_id = `No existe un edificio con ID ${edificio_id}`;
+    }
+  }
+  return errores;
+};
+
+// Crear aula (POST /api/aulas)
+app.post('/api/aulas', (req, res) => {
+  const errores = validarAula(req.body);
+  if (Object.keys(errores).length > 0) {
+    return res.status(422).json({ errores });
+  }
+  const { nombre, capacidad, wifi, edificio_id } = req.body;
+  const nueva = {
+    id: nextAulaId++,
+    nombre: String(nombre).trim(),
+    capacidad: Number(capacidad),
+    wifi: wifi === true || wifi === 'true' || wifi === 1 || wifi === '1',
+    edificio_id: edificio_id ? parseInt(edificio_id, 10) : null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  aulas.push(nueva);
+  res.status(201).json(nueva);
+});
+
+// Actualizar aula (PUT /api/aulas/:id)
+app.put('/api/aulas/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const aula = aulas.find((a) => a.id === id);
+  if (!aula) {
+    return res.status(404).json({ error: 'Aula no encontrada' });
+  }
+  const errores = validarAula(req.body, true);
+  if (Object.keys(errores).length > 0) {
+    return res.status(422).json({ errores });
+  }
+  const { nombre, capacidad, wifi, edificio_id } = req.body;
+  if (nombre !== undefined) aula.nombre = String(nombre).trim();
+  if (capacidad !== undefined) aula.capacidad = Number(capacidad);
+  if (wifi !== undefined) aula.wifi = wifi === true || wifi === 'true' || wifi === 1 || wifi === '1';
+  if (edificio_id !== undefined) aula.edificio_id = edificio_id ? parseInt(edificio_id, 10) : null;
+  aula.updated_at = new Date().toISOString();
+  res.json(aula);
+});
+
+// Eliminar aula (DELETE /api/aulas/:id)
+app.delete('/api/aulas/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const aula = aulas.find((a) => a.id === id);
+  if (!aula) {
+    return res.status(404).json({ error: 'Aula no encontrada' });
+  }
+  aulas = aulas.filter((a) => a.id !== id);
+  res.json({ mensaje: `Aula con ID ${id} eliminada exitosamente`, aula_eliminada: aula });
+});
+
 // Sillas API
 app.get('/api/sillas', (req, res) => {
   res.json(sillas);
