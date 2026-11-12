@@ -11,6 +11,7 @@ class EdificioController extends Controller
     /**
      * Listar todos los edificios con sus aulas.
      * GET /api/edificios
+     * 
      */
     public function index()
     {

@@ -18,6 +18,7 @@ class Aula extends Model
         'edificio_id',
     ];
 
+    
     /**
      * Un aula pertenece a un edificio (Relación N:1)
      */
